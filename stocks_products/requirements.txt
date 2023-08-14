@@ -4,3 +4,4 @@ psycopg2-binary
 django-debug-toolbar
 django-filter
 python-dotenv
+gunicorn
