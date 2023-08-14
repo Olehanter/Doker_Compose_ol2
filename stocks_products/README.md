@@ -1,26 +1,16 @@
-# Описание команд для запуска контейнера с backend-сервером
-### Конфигурация Dockerfile
-**# Использование официального образа в качестве основы:**  
-FROM python:latest  
-**# Отправка выходных данных в терминал без буферизации:**  
-ENV PYTHONUNBUFFERED 1  
-**# Определение файла настроек Django проекта:**  
-ENV DJANGO_SETTINGS_MODULE stocks_products.settings  
-**# Определение рабочей директории, откуда выполняются команды внутри
-контейнера:**  
-WORKDIR /app  
-**# Скопировать содержимое текущей директории в папку app внутри контейнера:**  
-COPY . /app  
-**# Запустить команду внутри контейнера, установка зависимостей:**  
-RUN pip install --no-cache-dir -r requirements.txt  
-**# Предоставить порт 8000 для прослушивания:**  
-EXPOSE 8000  
-**# Провести миграции Django приложения внутри контейнера:**  
-RUN python3 manage.py migrate  
-**# Выполнить запуск сервера внутри контейнера:**  
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+## Описание команд для запуска образа с Django приложением  
+**Имеется 2 основных файла Docker:** 
+- docker-compose.yml - для локальной разработки. Запускает только Django и Postgres;
+- docker-compose.prod.yml - для запуска на продакшене. Запускает Django, Postgres, Nginx и Gunicorn. 
+Номер порта, для Nginx, указан в самом файле (8888).
 
-### Создание образа  
-docker build -t stocks_products .
-### Запуск контейнера  
-docker run -p 8000:8000 stocks_products
+**Запуск образа для разработки:**  
+docker-compose up -d --build  
+**Запуск образа для продакшена:**  
+docker-compose -f docker-compose.prod.yml up -d --build  
+**Проведение миграций для разработки:**  
+docker-compose up -d --build  
+**Проведение миграций для продакшена:**  
+docker-compose -f docker-compose.prod.yml exec web python3 manage.py migrate --noinput  
+**Cбор статических файлов для продакшена:**  
+docker-compose -f docker-compose.prod.yml exec web python3 manage.py collectstatic --no-input --clear   
