@@ -9,7 +9,7 @@ docker-compose up -d --build
 **Запуск образа для продакшена:**  
 docker-compose -f docker-compose.prod.yml up -d --build  
 **Проведение миграций для разработки:**  
-docker-compose exec web python3 manage.py migrate --noinput
+docker-compose exec web python3 manage.py migrate --noinput  
 **Проведение миграций для продакшена:**  
 docker-compose -f docker-compose.prod.yml exec web python3 manage.py migrate --noinput  
 **Cбор статических файлов для продакшена:**  
