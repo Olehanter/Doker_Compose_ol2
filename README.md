@@ -2,7 +2,6 @@
 **Имеется 2 основных файла Docker:** 
 - docker-compose.yml - для локальной разработки. Запускает только Django и Postgres;
 - docker-compose.prod.yml - для запуска на продакшене. Запускает Django, Postgres, Nginx и Gunicorn. 
-Номер порта, для Nginx, указан в самом файле (8888).
 
 **Запуск образа для разработки:**  
 docker-compose up -d --build  
