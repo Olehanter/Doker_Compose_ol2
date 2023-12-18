@@ -1,2 +1,11 @@
 *.idea
 .xml
+.DS_Store
+venv/
+env/
+__pycache__/
+*.pyc
+*.sqlite3
+.env
+.idea/
+.vscode/
